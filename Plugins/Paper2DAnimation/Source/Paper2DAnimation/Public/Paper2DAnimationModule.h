@@ -9,7 +9,9 @@ class FPaper2DAnimationModule : public IModuleInterface
 {
 public:
 
-	/** IModuleInterface implementation */
+	/** IModuleInterface Interface */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
+	/** End of IModuleInterface Interface */
 };
+
