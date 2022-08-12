@@ -5,14 +5,18 @@
 #include "CoreMinimal.h"
 #include "SCommonEditorViewportToolbarBase.h"
 
-/** In-viewport toolbar widget used in the flipbook editor */
+/** Forward Declarations */
+class ICommonEditorViewportToolbarInfoProvider;
+class SWidget;
+
+/** In-viewport toolbar widget used in the Animation 2D Source Editor */
 class SAnimation2DSourceEditorViewportToolbar : public SCommonEditorViewportToolbarBase
 {
 public:
 	SLATE_BEGIN_ARGS(SAnimation2DSourceEditorViewportToolbar) { }
 	SLATE_END_ARGS()
 
-	void Construct(const FArguments& InArgs, TSharedPtr<class ICommonEditorViewportToolbarInfoProvider> InInfoProvider);
+	void Construct(const FArguments& InArgs, TSharedPtr<ICommonEditorViewportToolbarInfoProvider> InInfoProvider);
 
 	/** SCommonEditorViewportToolbarBase Interface */
 	virtual TSharedRef<SWidget> GenerateShowMenu() const override;

@@ -147,3 +147,4 @@ void FPaperEditorViewportClient::DestroyCheckerboardTexture()
 		CheckerboardTexture = nullptr;
 	}
 }
+

@@ -2,6 +2,7 @@
 
 #include "SAnimation2DSourceEditorViewportToolbar.h"
 #include "SEditorViewport.h"
+#include "Widgets/SWidget.h"
 
 void SAnimation2DSourceEditorViewportToolbar::Construct(const FArguments& InArgs, TSharedPtr<class ICommonEditorViewportToolbarInfoProvider> InInfoProvider)
 {
@@ -17,7 +18,7 @@ TSharedRef<SWidget> SAnimation2DSourceEditorViewportToolbar::GenerateShowMenu() 
 	const bool bInShouldCloseWindowAfterMenuSelection = true;
 	FMenuBuilder ShowMenuBuilder(bInShouldCloseWindowAfterMenuSelection, ViewportRef->GetCommandList());
 	{
-		// TODO : AddMenuEntry -> Commands
+		// TODO : ADD COMMANDS
 	}
 
 	return ShowMenuBuilder.MakeWidget();

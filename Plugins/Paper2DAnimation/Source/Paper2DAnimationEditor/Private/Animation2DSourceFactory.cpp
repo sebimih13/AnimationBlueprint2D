@@ -19,5 +19,6 @@ UObject* UAnimation2DSourceFactory::FactoryCreateNew(UClass* Class, UObject* InP
 	return NewAnimation2DSource;
 }
 
+
 #undef LOCTEXT_NAMESPACE
 

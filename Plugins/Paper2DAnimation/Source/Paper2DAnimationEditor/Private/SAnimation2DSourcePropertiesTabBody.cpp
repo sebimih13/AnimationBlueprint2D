@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SAnimation2DSourcePropertiesTabBody.h"
+#include "Animation2DSource.h"
 #include "Animation2DSourceEditor.h"
 
 void SAnimation2DSourcePropertiesTabBody::Construct(const FArguments& InArgs, TSharedPtr<FAnimation2DSourceEditor> InAnimation2DSourceEditor)

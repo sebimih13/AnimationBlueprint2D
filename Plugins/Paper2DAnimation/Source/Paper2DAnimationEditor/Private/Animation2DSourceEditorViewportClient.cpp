@@ -91,5 +91,6 @@ bool FAnimation2DSourceEditorViewportClient::InputKey(FViewport* InViewport, int
 	return (bHandled) ? true : FEditorViewportClient::InputKey(InViewport, ControllerId, Key, Event, AmountDepressed, bGamepad);
 }
 
+
 #undef LOCTEXT_NAMESPACE
 

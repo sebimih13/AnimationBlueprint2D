@@ -4,9 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
+#include "AssetTypeCategories.h"
 
-// Animation 2D Source support
-#include "Animation2DSourceAssetTypeActions.h"
+/** Forward Declarations */
+class IAssetTools;
+class IAssetTypeActions;
 
 class FPaper2DAnimationEditorModule : public IModuleInterface
 {

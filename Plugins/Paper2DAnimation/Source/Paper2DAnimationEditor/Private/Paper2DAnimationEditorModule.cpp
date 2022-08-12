@@ -3,6 +3,11 @@
 #include "Paper2DAnimationEditorModule.h"
 #include "Paper2DAnimationEditorLog.h"
 
+#include "IAssetTools.h"
+
+// Animation 2D Source support
+#include "Animation2DSourceAssetTypeActions.h"
+
 DEFINE_LOG_CATEGORY(LogPaper2DAnimationEditor);
 
 #define LOCTEXT_NAMESPACE "Paper2DAnimationEditor"
@@ -37,7 +42,7 @@ void FPaper2DAnimationEditorModule::OnPostEngineInit()
 	IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
 
 	// TODO : change parameters
-	Paper2DAnimationAssetCategoryBit = AssetTools.RegisterAdvancedAssetCategory(FName(TEXT("Paper2D Animation")), LOCTEXT("Paper2DAssetCategory", "Paper 2D Animation"));
+	Paper2DAnimationAssetCategoryBit = AssetTools.RegisterAdvancedAssetCategory(FName(TEXT("Paper2DAnimation")), LOCTEXT("Paper2DAssetCategory", "Paper 2D Animation"));
 
 	RegisterAssetTypeAction(AssetTools, MakeShareable(new FAnimation2DSourceAssetTypeActions(Paper2DAnimationAssetCategoryBit)));
 }
@@ -50,6 +55,7 @@ void FPaper2DAnimationEditorModule::RegisterAssetTypeAction(IAssetTools& AssetTo
 
 	
 IMPLEMENT_MODULE(FPaper2DAnimationEditorModule, Paper2DAnimationEditor)
+
 
 #undef LOCTEXT_NAMESPACE
 

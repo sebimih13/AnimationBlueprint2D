@@ -4,6 +4,8 @@
 #include "Animation2DSource.h"
 #include "Animation2DSourceEditor.h"
 
+#include "Toolkits/IToolkit.h"
+
 #define LOCTEXT_NAMESPACE "AssetTypeActions"
 
 FAnimation2DSourceAssetTypeActions::FAnimation2DSourceAssetTypeActions(EAssetTypeCategories::Type InAssetCategory)
