@@ -14,10 +14,6 @@ public:
 	SLATE_BEGIN_ARGS(SAnimation2DSourcePropertiesTabBody) { }
 	SLATE_END_ARGS()
 
-private:
-	/** Pointer back to owning Animation 2D Source Editor Instance (the keeper of state) */
-	TWeakPtr<FAnimation2DSourceEditor> Animation2DSourceEditorPtr;
-
 public:
 	void Construct(const FArguments& InArgs, TSharedPtr<FAnimation2DSourceEditor> InAnimation2DSourceEditor);
 	 
@@ -25,5 +21,9 @@ public:
 	virtual UObject* GetObjectToObserve() const override;
 	virtual TSharedRef<SWidget> PopulateSlot(TSharedRef<SWidget> PropertyEditorWidget) override;
 	/** End of SSingleObjectDetailsPanel Interface */
+
+private:
+	/** Pointer back to owning Animation 2D Source Editor Instance (the keeper of state) */
+	TWeakPtr<FAnimation2DSourceEditor> Animation2DSourceEditorPtr;
 };
 

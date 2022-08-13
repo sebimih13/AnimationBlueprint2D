@@ -10,6 +10,7 @@
 #include "Widgets/Docking/SDockTab.h"
 
 #include "SAnimation2DSourcePropertiesTabBody.h"
+#include "SAnimation2DSourceEditorComponentsTab.h"
 #include "SAnimation2DSourceEditorViewport.h"
 
 #define LOCTEXT_NAMESPACE "Animation2DSourceEditor"
@@ -23,11 +24,13 @@ struct FAnimation2DSourceEditorTabs
 	static const FName DetailsID;
 	static const FName ViewportID;
 	static const FName ComponentsID;
+	static const FName AssetDetailsID;
 };
 
 const FName FAnimation2DSourceEditorTabs::DetailsID(TEXT("Details"));
 const FName FAnimation2DSourceEditorTabs::ViewportID(TEXT("Viewport"));
 const FName FAnimation2DSourceEditorTabs::ComponentsID(TEXT("Components"));
+const FName FAnimation2DSourceEditorTabs::AssetDetailsID(TEXT("AssetDetails"));
 
 ///////////////////////////////////////////////////////////////////////////////////
 
@@ -67,14 +70,25 @@ TSharedRef<SDockTab> FAnimation2DSourceEditor::SpawnTab_Details(const FSpawnTabA
 
 TSharedRef<SDockTab> FAnimation2DSourceEditor::SpawnTab_Components(const FSpawnTabArgs& Args)
 {
-	// TODO : DELETE
-	TSharedPtr<FAnimation2DSourceEditor> Animation2DSourceEditorPtr = SharedThis(this);	
+	// TODO : WIT
 
 	return SNew(SDockTab)
-		.Icon(FEditorStyle::GetBrush("LevelEditor.Tabs.Components"))	// TODO : FIND BRUSH FOR COMPONENTS
+		.Icon(FEditorStyle::GetBrush("Kismet.Tabs.Components"))
 		.Label(LOCTEXT("ComponentsTab_Title", "Components"))
 		[
-			SNew(SAnimation2DSourcePropertiesTabBody, Animation2DSourceEditorPtr)		// TODO
+			SNew(SAnimation2DSourceEditorComponentsTab)
+		];
+}
+
+TSharedRef<SDockTab> FAnimation2DSourceEditor::SpawnTab_AssetDetails(const FSpawnTabArgs& Args)
+{
+	// TODO : WIT
+
+	return SNew(SDockTab)
+		.Icon(FEditorStyle::GetBrush("LevelEditor.Tabs.Details"))
+		.Label(LOCTEXT("AssetDetailsTab_Title", "Asset Details"))
+		[
+			SNew(SVerticalBox)
 		];
 }
 
@@ -98,7 +112,12 @@ void FAnimation2DSourceEditor::RegisterTabSpawners(const TSharedRef<FTabManager>
 	InTabManager->RegisterTabSpawner(FAnimation2DSourceEditorTabs::ComponentsID, FOnSpawnTab::CreateSP(this, &FAnimation2DSourceEditor::SpawnTab_Components))
 		.SetDisplayName(LOCTEXT("ComponentsTab", "Components"))
 		.SetGroup(WorkspaceMenuCategoryRef)
-		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.Tabs.Components"));		// TODO : FIND BRUSH FOR COMPONENTS
+		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "Kismet.Tabs.Components"));
+
+	InTabManager->RegisterTabSpawner(FAnimation2DSourceEditorTabs::AssetDetailsID, FOnSpawnTab::CreateSP(this, &FAnimation2DSourceEditor::SpawnTab_AssetDetails))
+		.SetDisplayName(LOCTEXT("AssetDetailsTab", "Asset Details"))
+		.SetGroup(WorkspaceMenuCategoryRef)
+		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.Tabs.Details"));
 }
 
 void FAnimation2DSourceEditor::UnregisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
@@ -108,6 +127,7 @@ void FAnimation2DSourceEditor::UnregisterTabSpawners(const TSharedRef<FTabManage
 	InTabManager->UnregisterTabSpawner(FAnimation2DSourceEditorTabs::DetailsID);
 	InTabManager->UnregisterTabSpawner(FAnimation2DSourceEditorTabs::ViewportID);
 	InTabManager->UnregisterTabSpawner(FAnimation2DSourceEditorTabs::ComponentsID);
+	InTabManager->UnregisterTabSpawner(FAnimation2DSourceEditorTabs::AssetDetailsID);
 }
 
 void FAnimation2DSourceEditor::InitAnimation2DSourceEditor(const EToolkitMode::Type Mode, const TSharedPtr<IToolkitHost>& InitToolkitHost, UAnimation2DSource* InitAnimation2DSource)
@@ -120,6 +140,7 @@ void FAnimation2DSourceEditor::InitAnimation2DSourceEditor(const EToolkitMode::T
 	ViewportPtr = SNew(SAnimation2DSourceEditorViewport)
 		.Animation2DSourceBeingEdited(this, &FAnimation2DSourceEditor::GetAnimation2DSourceBeingEdited);
 
+	// TODO : CHANGE THE DEFAULT LAYOUT
 	// Default Layout
 	const TSharedRef<FTabManager::FLayout> StandaloneDefaultLayout = FTabManager::NewLayout("Standalone_Animation2DSourceEditor_Layout_v1")
 		->AddArea
