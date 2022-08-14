@@ -2,13 +2,21 @@
 
 #include "SAnimation2DSourceEditorComponentsTab.h"
 
+// Commands
+#include "Animation2DSourceEditorCommands.h"
+#include "Framework/Commands/UICommandList.h"
+
+// Slate
 #include "Widgets/SWidget.h"
 #include "Widgets/Input/SComboButton.h"
+#include "Widgets/Layout/SBorder.h"
+#include "Widgets/SBoxPanel.h"
 
 #define LOCTEXT_NAMESPACE "SAnimation2DSourceEditorComponentsTab"
 
 void SAnimation2DSourceEditorComponentsTab::Construct(const FArguments& InArgs)
 {
+	// Widgets
 	TSharedPtr<SWidget> AddNewMenu = SNullWidget::NullWidget;
 
 	AddNewMenu = SNew(SComboButton)
@@ -16,28 +24,35 @@ void SAnimation2DSourceEditorComponentsTab::Construct(const FArguments& InArgs)
 		.ButtonStyle(FEditorStyle::Get(), "FlatButton.Success")
 		.ForegroundColor(FLinearColor::White)
 		.ToolTipText(LOCTEXT("AddNewToolTip", "Add a new Animation 2D Sequence or Animation 2D Montage."))
+		.OnGetMenuContent(this, &SAnimation2DSourceEditorComponentsTab::CreateAddNewMenuWidget)
 		.HasDownArrow(true)
-		.ContentPadding(FMargin(1, 0, 2, 0))
+		.ContentPadding(2.0f)
+		// TODO : AddMetaData
+		// TODO : IsEnabled
 		.ButtonContent()
 		[
 			SNew(SHorizontalBox)
 
 			+SHorizontalBox::Slot()
-				.AutoWidth()
-				.Padding(FMargin(0, 1))
-				[
-					SNew(SImage)
-						.Image(FEditorStyle::GetBrush("Plus"))
-				]
+			.VAlign(EVerticalAlignment::VAlign_Center)
+			.AutoWidth()
+			.Padding(1.0f, 1.0f)
+			[
+				SNew(STextBlock)
+				.TextStyle(FEditorStyle::Get(), "ContentBrowser.TopBar.Font")
+				.Font(FEditorStyle::Get().GetFontStyle("FontAwesome.10"))
+				.Text(FText::FromString(FString(TEXT("\xf067"))) /*fa-plus*/)
+			]
 
 			+SHorizontalBox::Slot()
-				.VAlign(EVerticalAlignment::VAlign_Center)
-				.AutoWidth()
-				.Padding(FMargin(2, 0, 2, 0))
-				[
-					SNew(STextBlock)
-						.Text(LOCTEXT("AddNewButtonText", "Add New"))
-				]
+			.VAlign(EVerticalAlignment::VAlign_Center)
+			.AutoWidth()
+			.Padding(1.0f)
+			[
+				SNew(STextBlock)
+				.Text(LOCTEXT("AddNewButtonText", "Add New"))
+				.TextStyle(FEditorStyle::Get(), "ContentBrowser.TopBar.Font")
+			]
 		];
 
 	// Now piece together all the content for this widget
@@ -48,16 +63,50 @@ void SAnimation2DSourceEditorComponentsTab::Construct(const FArguments& InArgs)
 		+SVerticalBox::Slot()
 		.AutoHeight()
 		[
-			SNew(SHorizontalBox)
-
-			+SHorizontalBox::Slot()
-			.AutoWidth()
-			.Padding(0, 0, 2, 0)
+			SNew(SBorder)
+			.Padding(4.0f)
+			.BorderImage(FEditorStyle::GetBrush("ToolPanel.GroupBorder"))
+			// TODO : AddMetaData
 			[
-				AddNewMenu.ToSharedRef()
+				SNew(SHorizontalBox)
+
+				+SHorizontalBox::Slot()
+				.AutoWidth()
+				.Padding(0.0f, 0.0f, 2.0f, 0.0f)
+				[
+					AddNewMenu.ToSharedRef()
+				]
 			]
 		]
+		
+		+SVerticalBox::Slot()
+		.FillHeight(1.0f)
+		[
+			SNew(SVerticalBox)
+		]
 	];
+}
+
+TSharedRef<SWidget> SAnimation2DSourceEditorComponentsTab::CreateAddNewMenuWidget()
+{
+	// TODO : CommandList
+	FMenuBuilder MenuBuilder(true, CommandList);
+	{
+		MenuBuilder.BeginSection("AddNewItem", LOCTEXT("AddOperations", "Add New"));
+
+		// TODO : Build Add New Menu
+		// MenuBuilder.AddMenuEntry(FAnimation2DSourceEditorCommands::Get().AddNewAnimation2DSequence);
+		// MenuBuilder.AddMenuEntry(FAnimation2DSourceEditorCommands::Get().AddNewAnimation2DMontage);
+
+		MenuBuilder.EndSection();
+	}
+
+	return MenuBuilder.MakeWidget();
+}
+
+SAnimation2DSourceEditorComponentsTab::~SAnimation2DSourceEditorComponentsTab()
+{
+	FCoreUObjectDelegates::OnObjectPropertyChanged.RemoveAll(this);
 }
 
 

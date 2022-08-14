@@ -15,8 +15,7 @@ TSharedRef<SWidget> SAnimation2DSourceEditorViewportToolbar::GenerateShowMenu() 
 
 	TSharedRef<SEditorViewport> ViewportRef = GetInfoProvider().GetViewportWidget();
 
-	const bool bInShouldCloseWindowAfterMenuSelection = true;
-	FMenuBuilder ShowMenuBuilder(bInShouldCloseWindowAfterMenuSelection, ViewportRef->GetCommandList());
+	FMenuBuilder ShowMenuBuilder(true, ViewportRef->GetCommandList());
 	{
 		// TODO : ADD COMMANDS
 	}
