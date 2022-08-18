@@ -7,6 +7,8 @@
 
 /** Forward Declarations */
 class FUICommandList;
+class FMenuBuilder;
+class FAnimation2DSourceEditor;
 
 class SAnimation2DSourceEditorComponentsTab : public SCompoundWidget
 {
@@ -15,14 +17,18 @@ public:
 	SLATE_END_ARGS()
 
 	/** Constructor / Destructors */
-	void Construct(const FArguments& InArgs);
+	void Construct(const FArguments& InArgs, TWeakPtr<FAnimation2DSourceEditor> InAnimation2DSourceEditor);
 	~SAnimation2DSourceEditorComponentsTab();
 
 private:
 	TSharedRef<SWidget> CreateAddNewMenuWidget();
+	void BuildAddNewMenu(FMenuBuilder& MenuBuilder);
 
 private:
 	/** List of UI Commands for this scope */
 	TSharedPtr<FUICommandList> CommandList;
+
+	/** Pointer back to the Animation2DSource Editor that owns us */
+	TWeakPtr<FAnimation2DSourceEditor> Animation2DSourceEditorPtr;
 };
 

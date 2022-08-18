@@ -1,10 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SAnimation2DSourceEditorComponentsTab.h"
+#include "Animation2DSourceEditor.h"
 
 // Commands
-#include "Animation2DSourceEditorCommands.h"
 #include "Framework/Commands/UICommandList.h"
+#include "Animation2DSourceEditorCommands.h"
 
 // Slate
 #include "Widgets/SWidget.h"
@@ -14,8 +15,16 @@
 
 #define LOCTEXT_NAMESPACE "SAnimation2DSourceEditorComponentsTab"
 
-void SAnimation2DSourceEditorComponentsTab::Construct(const FArguments& InArgs)
+void SAnimation2DSourceEditorComponentsTab::Construct(const FArguments& InArgs, TWeakPtr<FAnimation2DSourceEditor> InAnimation2DSourceEditor)
 {
+	Animation2DSourceEditorPtr = InAnimation2DSourceEditor;
+
+	if (InAnimation2DSourceEditor.IsValid())
+	{
+		CommandList = MakeShareable(new FUICommandList);
+		CommandList->Append(InAnimation2DSourceEditor.Pin()->GetToolkitCommands());
+	}
+
 	// Widgets
 	TSharedPtr<SWidget> AddNewMenu = SNullWidget::NullWidget;
 
@@ -87,26 +96,26 @@ void SAnimation2DSourceEditorComponentsTab::Construct(const FArguments& InArgs)
 	];
 }
 
-TSharedRef<SWidget> SAnimation2DSourceEditorComponentsTab::CreateAddNewMenuWidget()
-{
-	// TODO : CommandList
-	FMenuBuilder MenuBuilder(true, CommandList);
-	{
-		MenuBuilder.BeginSection("AddNewItem", LOCTEXT("AddOperations", "Add New"));
-
-		// TODO : Build Add New Menu
-		// MenuBuilder.AddMenuEntry(FAnimation2DSourceEditorCommands::Get().AddNewAnimation2DSequence);
-		// MenuBuilder.AddMenuEntry(FAnimation2DSourceEditorCommands::Get().AddNewAnimation2DMontage);
-
-		MenuBuilder.EndSection();
-	}
-
-	return MenuBuilder.MakeWidget();
-}
-
 SAnimation2DSourceEditorComponentsTab::~SAnimation2DSourceEditorComponentsTab()
 {
 	FCoreUObjectDelegates::OnObjectPropertyChanged.RemoveAll(this);
+}
+
+TSharedRef<SWidget> SAnimation2DSourceEditorComponentsTab::CreateAddNewMenuWidget()
+{
+	FMenuBuilder MenuBuilder(true, CommandList);
+	BuildAddNewMenu(MenuBuilder);
+	return MenuBuilder.MakeWidget();
+}
+
+void SAnimation2DSourceEditorComponentsTab::BuildAddNewMenu(FMenuBuilder& MenuBuilder)
+{
+	MenuBuilder.BeginSection("AddNewItem", LOCTEXT("AddOperations", "Add New"));
+
+	MenuBuilder.AddMenuEntry(FAnimation2DSourceEditorCommands::Get().AddNewAnimation2DSequence);
+	MenuBuilder.AddMenuEntry(FAnimation2DSourceEditorCommands::Get().AddNewAnimation2DMontage);
+
+	MenuBuilder.EndSection();
 }
 
 

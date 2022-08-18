@@ -13,6 +13,12 @@
 #include "SAnimation2DSourceEditorComponentsTab.h"
 #include "SAnimation2DSourceEditorViewport.h"
 
+// Commands
+#include "Animation2DSourceEditorCommands.h"
+
+// Log
+#include "Paper2DAnimationEditorLog.h"
+
 #define LOCTEXT_NAMESPACE "Animation2DSourceEditor"
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -42,7 +48,7 @@ FAnimation2DSourceEditor::FAnimation2DSourceEditor()
 
 TSharedRef<SDockTab> FAnimation2DSourceEditor::SpawnTab_Viewport(const FSpawnTabArgs& Args)
 {
-	// TODO
+	// TODO : WIT
 
 	return SNew(SDockTab)
 		.Label(LOCTEXT("ViewportTab_Title", "Viewport"))
@@ -76,7 +82,7 @@ TSharedRef<SDockTab> FAnimation2DSourceEditor::SpawnTab_Components(const FSpawnT
 		.Icon(FEditorStyle::GetBrush("Kismet.Tabs.Components"))
 		.Label(LOCTEXT("ComponentsTab_Title", "Components"))
 		[
-			SNew(SAnimation2DSourceEditorComponentsTab)
+			SNew(SAnimation2DSourceEditorComponentsTab, SharedThis(this))
 		];
 }
 
@@ -135,7 +141,8 @@ void FAnimation2DSourceEditor::InitAnimation2DSourceEditor(const EToolkitMode::T
 	GEditor->GetEditorSubsystem<UAssetEditorSubsystem>()->CloseOtherEditors(InitAnimation2DSource, this);
 	Animation2DSourceBeingEdited = InitAnimation2DSource;
 
-	// TODO : COMMANDS
+	// Commands
+	CreateDefaultCommands();
 	
 	ViewportPtr = SNew(SAnimation2DSourceEditorViewport)
 		.Animation2DSourceBeingEdited(this, &FAnimation2DSourceEditor::GetAnimation2DSourceBeingEdited);
@@ -181,6 +188,24 @@ void FAnimation2DSourceEditor::InitAnimation2DSourceEditor(const EToolkitMode::T
 	// TODO : Extend things
 }
 
+void FAnimation2DSourceEditor::CreateDefaultCommands()
+{
+	FAnimation2DSourceEditorCommands::Register();
+
+	const FAnimation2DSourceEditorCommands& Commands = FAnimation2DSourceEditorCommands::Get();
+	const TSharedRef<FUICommandList>& UICommandList = GetToolkitCommands();
+
+	UICommandList->MapAction(Commands.AddNewAnimation2DSequence,
+		FExecuteAction::CreateSP(this, &FAnimation2DSourceEditor::OnAddNewAnimation2DSequence),
+		FCanExecuteAction()
+	);
+
+	UICommandList->MapAction(Commands.AddNewAnimation2DMontage,
+		FExecuteAction::CreateSP(this, &FAnimation2DSourceEditor::OnAddNewAnimation2DMontage),
+		FCanExecuteAction()
+		);
+}
+
 FLinearColor FAnimation2DSourceEditor::GetWorldCentricTabColorScale() const
 {
 	return FLinearColor::White;
@@ -214,6 +239,18 @@ FString FAnimation2DSourceEditor::GetWorldCentricTabPrefix() const
 void FAnimation2DSourceEditor::AddReferencedObjects(FReferenceCollector& Collector)
 {
 	Collector.AddReferencedObject(Animation2DSourceBeingEdited);
+}
+
+void FAnimation2DSourceEditor::OnAddNewAnimation2DSequence()
+{
+	// TODO
+	UE_LOG(LogPaper2DAnimationEditor, Warning, TEXT("Add New Animation 2D Sequence"));
+}
+
+void FAnimation2DSourceEditor::OnAddNewAnimation2DMontage()
+{
+	// TODO
+	UE_LOG(LogPaper2DAnimationEditor, Warning, TEXT("Add New Animation 2D Montage"));
 }
 
 

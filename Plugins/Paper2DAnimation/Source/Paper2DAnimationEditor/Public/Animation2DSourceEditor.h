@@ -41,6 +41,18 @@ public:
 	// TODO : Preview Component
 
 protected:
+	/** Create Default Commands **/
+	void CreateDefaultCommands();
+
+public:
+
+	/** Adds a new Animation2DSequence to this Animation2DSource */
+	void OnAddNewAnimation2DSequence();
+	
+	/** Adds a new Animation2DMontage to this Animation2DSource */
+	void OnAddNewAnimation2DMontage();
+
+protected:
 	// TODO : COMMANDS
 
 	TSharedRef<SDockTab> SpawnTab_Viewport(const FSpawnTabArgs& Args);

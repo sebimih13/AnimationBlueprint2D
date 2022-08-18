@@ -17,16 +17,14 @@ FAnimation2DSourceEditorCommands::FAnimation2DSourceEditorCommands()
 
 }
 
-PRAGMA_DISABLE_OPTIMIZATION
-
 void FAnimation2DSourceEditorCommands::RegisterCommands()
 {
 	UI_COMMAND(AddNewAnimation2DSequence, "Animation2D Sequence", "Adds a new Animation2D Sequence to this source.", EUserInterfaceActionType::Button, FInputChord());
-	UI_COMMAND(AddNewAnimation2DSequence, "Animation2D Montage", "Adds a new Animation2D Montage to this source.", EUserInterfaceActionType::Button, FInputChord());
+	UI_COMMAND(AddNewAnimation2DMontage, "Animation2D Montage", "Adds a new Animation2D Montage to this source.", EUserInterfaceActionType::Button, FInputChord());
 }
-
-PRAGMA_ENABLE_OPTIMIZATION
 
 
 #undef LOCTEXT_NAMESPACE
+
+// TODO : Add image to the MenuBuilder for each command -> SAnimation2DSourceEditorComponentsTab
 
