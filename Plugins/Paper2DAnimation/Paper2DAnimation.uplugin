@@ -26,6 +26,13 @@
 			"Type": "Editor",
 			"LoadingPhase": "Default"
 		}
+	],
+	"Plugins": 
+	[
+		{
+			"Name": "Paper2D",
+			"Enabled": true
+		}
 	]
 }
 

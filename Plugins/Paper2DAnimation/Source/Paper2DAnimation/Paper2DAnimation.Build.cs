@@ -15,7 +15,8 @@ public class Paper2DAnimation : ModuleRules
 				"CoreUObject",
 				"Engine",
 				"Slate",
-				"SlateCore"
+				"SlateCore",
+				"Paper2D"				// todo : check
 			}
 		);
 					

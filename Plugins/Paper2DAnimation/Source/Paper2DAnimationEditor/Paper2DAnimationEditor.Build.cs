@@ -28,6 +28,8 @@ public class Paper2DAnimationEditor : ModuleRules
 				"RenderCore",
 				"KismetWidgets",
 				"EditorStyle",
+				"ContentBrowser",
+				"Paper2D",				// todo : check
 				"Paper2DAnimation"
 			}
 		);

@@ -76,8 +76,6 @@ TSharedRef<SDockTab> FAnimation2DSourceEditor::SpawnTab_Details(const FSpawnTabA
 
 TSharedRef<SDockTab> FAnimation2DSourceEditor::SpawnTab_Components(const FSpawnTabArgs& Args)
 {
-	// TODO : WIT
-
 	return SNew(SDockTab)
 		.Icon(FEditorStyle::GetBrush("Kismet.Tabs.Components"))
 		.Label(LOCTEXT("ComponentsTab_Title", "Components"))

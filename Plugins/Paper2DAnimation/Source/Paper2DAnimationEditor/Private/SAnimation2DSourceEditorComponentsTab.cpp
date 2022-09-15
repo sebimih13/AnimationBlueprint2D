@@ -3,11 +3,15 @@
 #include "SAnimation2DSourceEditorComponentsTab.h"
 #include "Animation2DSourceEditor.h"
 
+// Log : todo delete
+#include "Paper2DAnimationEditorLog.h"
+
 // Commands
-#include "Framework/Commands/UICommandList.h"
 #include "Animation2DSourceEditorCommands.h"
+#include "Framework/Commands/UICommandList.h"
 
 // Slate
+#include "SAnimation2DBrowser.h"
 #include "Widgets/SWidget.h"
 #include "Widgets/Input/SComboButton.h"
 #include "Widgets/Layout/SBorder.h"
@@ -88,10 +92,11 @@ void SAnimation2DSourceEditorComponentsTab::Construct(const FArguments& InArgs, 
 			]
 		]
 		
-		+SVerticalBox::Slot()
+	    +SVerticalBox::Slot()
 		.FillHeight(1.0f)
 		[
-			SNew(SVerticalBox)
+			SNew(SAnimation2DBrowser)
+			.OnGetAssetContextMenu(this, &SAnimation2DSourceEditorComponentsTab::OnGetAssetContextMenu)
 		]
 	];
 }
@@ -111,11 +116,40 @@ TSharedRef<SWidget> SAnimation2DSourceEditorComponentsTab::CreateAddNewMenuWidge
 void SAnimation2DSourceEditorComponentsTab::BuildAddNewMenu(FMenuBuilder& MenuBuilder)
 {
 	MenuBuilder.BeginSection("AddNewItem", LOCTEXT("AddOperations", "Add New"));
-
-	MenuBuilder.AddMenuEntry(FAnimation2DSourceEditorCommands::Get().AddNewAnimation2DSequence);
-	MenuBuilder.AddMenuEntry(FAnimation2DSourceEditorCommands::Get().AddNewAnimation2DMontage);
-
+	{
+		MenuBuilder.AddMenuEntry(FAnimation2DSourceEditorCommands::Get().AddNewAnimation2DSequence);
+		MenuBuilder.AddMenuEntry(FAnimation2DSourceEditorCommands::Get().AddNewAnimation2DMontage);
+	}
 	MenuBuilder.EndSection();
+}
+
+TSharedPtr<SWidget> SAnimation2DSourceEditorComponentsTab::OnGetAssetContextMenu(const TArray<FAssetData>& SelectedAssets)
+{
+	UE_LOG(LogPaper2DAnimationEditor, Warning, TEXT("Components Tab -> Options with %d selected assets"), SelectedAssets.Num());
+
+	FMenuBuilder MenuBuilder(true, CommandList);
+
+	if (SelectedAssets.Num())
+	{
+		MenuBuilder.BeginSection("BasicOperations");
+		{
+			// TODO : WIT
+			/**
+			  * RENAME
+			  * ? CUT
+			  * ? COPY
+			  * DUPLICATE
+			  * DELETE
+			*/
+		}
+		MenuBuilder.EndSection();
+	}
+	else
+	{
+		BuildAddNewMenu(MenuBuilder);
+	}
+
+	return MenuBuilder.MakeWidget();
 }
 
 

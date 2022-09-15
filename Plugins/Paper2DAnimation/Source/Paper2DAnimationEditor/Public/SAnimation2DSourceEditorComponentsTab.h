@@ -30,5 +30,8 @@ private:
 
 	/** Pointer back to the Animation2DSource Editor that owns us */
 	TWeakPtr<FAnimation2DSourceEditor> Animation2DSourceEditorPtr;
+
+	/** Delegate to handle creation of context menu */
+	TSharedPtr<SWidget> OnGetAssetContextMenu(const TArray<FAssetData>& SelectedAssets);
 };
 
