@@ -24,5 +24,9 @@ private:
 	/** Animation source for which to create this sequence */
 	UPROPERTY(VisibleAnywhere)
 	UAnimation2DSource* TargetAnimation2DSource;
+
+public:
+	FORCEINLINE void SetTargetAnimation2DSource(UAnimation2DSource* Target) { TargetAnimation2DSource = Target; }
+	FORCEINLINE UAnimation2DSource* GetTargetAnimation2DSource() const { return TargetAnimation2DSource; }
 };
 

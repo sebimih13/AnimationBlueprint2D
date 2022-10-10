@@ -36,7 +36,7 @@ public:
 
 	void InitAnimation2DSourceEditor(const EToolkitMode::Type Mode, const TSharedPtr<IToolkitHost>& InitToolkitHost, UAnimation2DSource* InitAnimation2DSource);
 
-	UAnimation2DSource* GetAnimation2DSourceBeingEdited() const { return Animation2DSourceBeingEdited; }
+	FORCEINLINE UAnimation2DSource* GetAnimation2DSourceBeingEdited() const { return Animation2DSourceBeingEdited; }
 
 	// TODO : Preview Component
 

@@ -24,6 +24,7 @@
 #include "Animation/AnimationAsset.h"
 #include "Animation/AnimSequence.h"
 #include "PaperFlipbook.h"
+#include "Animation2DSequence.h"
 
 #define LOCTEXT_NAMESPACE "Animation2DBrowser"
 
@@ -36,8 +37,8 @@ void SAnimation2DBrowser::Construct(const FArguments& InArgs)
 
 	// Configure filter for asset picker
 	Filter.bRecursiveClasses = true;
-	Filter.ClassNames.Add(UAnimationAsset::StaticClass()->GetFName());		// TODO : Change to UAnimation2DAsset
-	Filter.ClassNames.Add(UPaperFlipbook::StaticClass()->GetFName());		// TODO : LoadModuleChecked
+	Filter.ClassNames.Add(UPaperFlipbook::StaticClass()->GetFName());				// TODO : delete
+	Filter.ClassNames.Add(UAnimation2DSequence::StaticClass()->GetFName());
 
 	// Content Browser configuration
 	FAssetPickerConfig Config;

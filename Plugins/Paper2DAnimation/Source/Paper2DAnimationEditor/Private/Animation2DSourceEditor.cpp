@@ -3,7 +3,11 @@
 #include "Animation2DSourceEditor.h"
 #include "Animation2DSource.h"
 
+#include "Animation2DSequence.h"			// TODO : check
+#include "Animation2DSequenceFactory.h"		// TODO : check
+
 #include "Toolkits/AssetEditorToolkit.h"
+#include "AssetToolsModule.h"				// TODO : check
 
 // Slate
 #include "SScrubControlPanel.h"
@@ -243,6 +247,31 @@ void FAnimation2DSourceEditor::OnAddNewAnimation2DSequence()
 {
 	// TODO
 	UE_LOG(LogPaper2DAnimationEditor, Warning, TEXT("Add New Animation 2D Sequence"));
+
+	UAnimation2DSequenceFactory* Animation2DSequenceFactory = NewObject<UAnimation2DSequenceFactory>(GetTransientPackage());
+	Animation2DSequenceFactory->AddToRoot();
+	Animation2DSequenceFactory->SetTargetAnimation2DSource(Animation2DSourceBeingEdited);
+
+	// Create the Animation 2D Sequence
+	FAssetToolsModule& AssetToolsModule = FModuleManager::Get().LoadModuleChecked<FAssetToolsModule>(TEXT("AssetTools"));
+
+	const FString DefaultAssetName = Animation2DSequenceFactory->GetDefaultNewAssetName();
+	const FString SourcePackageName = Animation2DSourceBeingEdited->GetPackage()->GetName();
+	const FString AssetPath = FPackageName::GetLongPackagePath(SourcePackageName);
+
+	FString OutAssetName;
+	FString OutPackageName;
+	AssetToolsModule.Get().CreateUniqueAssetName(AssetPath + TEXT("/") + DefaultAssetName, TEXT(""), OutPackageName, OutAssetName);
+	UObject* CreatedAsset = AssetToolsModule.Get().CreateAsset(OutAssetName, FPackageName::GetLongPackagePath(OutPackageName), UAnimation2DSequence::StaticClass(), Animation2DSequenceFactory, FName("AnimBPEditor_NewSequence"));
+
+	UE_LOG(LogPaper2DAnimationEditor, Warning, TEXT("DefaultAssetName : %s"), *DefaultAssetName);
+	UE_LOG(LogPaper2DAnimationEditor, Warning, TEXT("SourcePackageName : %s"), *SourcePackageName);
+
+	UE_LOG(LogPaper2DAnimationEditor, Warning, TEXT("OutAssetName : %s"), *OutAssetName);
+	UE_LOG(LogPaper2DAnimationEditor, Warning, TEXT("LongPackagePath : %s"), *FPackageName::GetLongPackagePath(OutPackageName));
+
+	// Remove the factory
+	Animation2DSequenceFactory->RemoveFromRoot();
 }
 
 void FAnimation2DSourceEditor::OnAddNewAnimation2DMontage()

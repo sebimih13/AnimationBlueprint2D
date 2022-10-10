@@ -2,6 +2,8 @@
 
 #include "Animation2DSource.h"
 
+#include "Animation2DSequence.h"		// TODO : check
+
 UAnimation2DSource::UAnimation2DSource(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
