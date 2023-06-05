@@ -1,4 +1,7 @@
-# AnimationBlueprint2D
+# AnimationBlueprint2D  
+
+Unreal Engine 4 Plugin for 2D Animations.  
+  
 AnimationBlueprint2D - work in progress
 
 # Roadmap
